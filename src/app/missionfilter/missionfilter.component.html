@@ -1,0 +1,11 @@
+<div class="filter-box">
+    <label for="year"><h3>Filter by Launch Year:</h3></label>
+    <input
+      id="year"
+      type="text"
+      [(ngModel)]="selectedYear"
+      (input)="onYearChange()"
+      placeholder="e.g. 2018"
+    />
+  </div>
+  

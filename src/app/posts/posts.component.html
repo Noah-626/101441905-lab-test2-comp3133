@@ -1,0 +1,50 @@
+
+<h3></h3>
+<div *ngFor="let post of filteredPosts">
+  <h4 (click)="selectMission(post)" style="cursor: pointer; text-decoration: underline; color: blue;">
+    {{ post.mission_name }} ({{ post.launch_year }})
+  </h4>
+</div>
+
+<app-missiondetails *ngIf="selectedMission" [mission]="selectedMission"></app-missiondetails>
+
+<hr />
+<h3>Search By Launch Year</h3>
+<app-mission-filter (yearFilterChanged)="filterByYear($event)"></app-mission-filter>
+
+<h1>List Of Mission</h1>
+<div *ngIf="filteredPosts && filteredPosts.length > 0; else noData">
+  <div *ngFor="let post of filteredPosts" class="mission-card">
+    <h2>{{ post.mission_name }} ({{ post.launch_year }})</h2>
+    <p><strong>Flight Number:</strong> {{ post.flight_number }}</p>
+    <p><strong>Details:</strong> {{ post.details || 'No details available.' }}</p>
+
+    <div class="rocket-info">
+      <p><strong>Rocket Name:</strong> {{ post.rocket?.rocket_name }}</p>
+      <p><strong>Rocket Type:</strong> {{ post.rocket?.rocket_type }}</p>
+    </div>
+
+    <div class="media-links">
+      <img *ngIf="post.links?.mission_patch_small" [src]="post.links.mission_patch_small" alt="Mission Patch" width="150">
+
+      <p><strong>Links:</strong></p>
+      <ul>
+        <li *ngIf="post.links?.article_link">
+          <a [href]="post.links.article_link" target="_blank">Article</a>
+        </li>
+        <li *ngIf="post.links?.wikipedia">
+          <a [href]="post.links.wikipedia" target="_blank">Wikipedia</a>
+        </li>
+        <li *ngIf="post.links?.video_link">
+          <a [href]="post.links.video_link" target="_blank">Video</a>
+        </li>
+      </ul>
+    </div>
+
+    <hr />
+  </div>
+</div>
+
+<ng-template #noData>
+  <p>No missions available for the selected year.</p>
+</ng-template>
